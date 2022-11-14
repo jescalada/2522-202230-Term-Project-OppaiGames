@@ -13,7 +13,7 @@ public class GameController {
     private final List<Item> items;
 
     private GameController() {
-        player = new Player();
+        player = new Player("Pepe");
         shop = new Shop();
         gatheringPoints = loadGatheringPoints();
         recipes = loadRecipes();

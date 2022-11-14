@@ -27,7 +27,7 @@ public class GatheringPoint {
      * @return an Item representing one or more items
      */
     public Item gather() {
-        return new Item("Stefan", "human", 6);
+        return new Item("Stefan", "human", 6, 3);
     }
 
     /**
