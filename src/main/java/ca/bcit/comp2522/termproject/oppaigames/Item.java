@@ -8,25 +8,22 @@ public class Item {
 
     private final String name;
     private final String description;
-    private final double price;
-    private final int quantity;
+    private final int value;
 
     /**
      * Constructs an item with the specified information.
      * @param name a string
      * @param description a string
-     * @param price a double
-     * @param quantity an integer
+     * @param value an int
      */
-    public Item(String name, String description, double price, int quantity) {
+    public Item(String name, String description, int value) {
         if (name != null && !name.trim().isEmpty()) {
             this.name = name;
         } else {
             this.name = DEFAULT_NAME;
         }
         this.description = description;
-        this.price = price;
-        this.quantity = quantity;
+        this.value = value;
     }
 
     /**
@@ -47,17 +44,9 @@ public class Item {
 
     /**
      * Gets the price of an item.
-     * @return a string representing the description of an item
+     * @return a int representing the value of an item
      */
-    public double getPrice() {
-        return price;
-    }
-
-    /**
-     * Gets the price of an item.
-     * @return a string representing the description of an item
-     */
-    public int getQuantity() {
-        return quantity;
+    public int getValue() {
+        return value;
     }
 }

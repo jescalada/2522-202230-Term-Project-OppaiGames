@@ -13,7 +13,8 @@ public class Shop {
      * @return the number of the item left in stock after buying
      */
     public int buyItem(Item item) {
-        return itemsInStock.get(item) - item.getQuantity();
+//        return itemsInStock.get(item) - item.getQuantity();
+        return 0;
     }
 
     /**
@@ -22,7 +23,8 @@ public class Shop {
      * @return the number of the item left in stock after selling
      */
     public int sellItem(Item item) {
-        return itemsInStock.get(item) + item.getQuantity();
+//        return itemsInStock.get(item) + item.getQuantity();
+        return 0;
     }
 
     /**
