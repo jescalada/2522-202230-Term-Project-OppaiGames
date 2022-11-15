@@ -45,7 +45,7 @@ public class GameDriver extends Application {
             showShop(stage, game);
         });
         craftButton.setOnAction(event -> {
-            showCraft();
+            showCraft(stage, game);
         });
 
         center.getChildren().addAll(inventoryButton, mapButton, shopButton, craftButton);
