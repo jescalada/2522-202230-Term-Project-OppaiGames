@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,7 +23,7 @@ public class GameDriver extends Application {
         HBox center = new HBox();
         StackPane top = new StackPane();
 
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 1920, 1040);
 
         Text currencyLabel = new Text();
 
@@ -64,6 +65,7 @@ public class GameDriver extends Application {
 
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -79,7 +81,7 @@ public class GameDriver extends Application {
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
 
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 1920, 1040);
 
         Text panelTitle = new Text();
 
@@ -125,6 +127,7 @@ public class GameDriver extends Application {
 
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
         stage.show();
     }
     private void showMap(Stage stage, GameController game) {
@@ -137,7 +140,7 @@ public class GameDriver extends Application {
         TilePane center = new TilePane();
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 1920, 1040);
         Text panelTitle = new Text();
         panelTitle.setText("Map");
         panelTitle.setScaleX(3);
@@ -184,6 +187,7 @@ public class GameDriver extends Application {
 
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
         stage.show();
     }
     private void showShop(Stage stage, GameController game) {
@@ -206,7 +210,7 @@ public class GameDriver extends Application {
 
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 1920, 1040);
 
         Text panelTitle = new Text("Shop");
         Text leftPanelTitle = new Text("For Sale:");
@@ -278,29 +282,19 @@ public class GameDriver extends Application {
 
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
         stage.show();
     }
     private void showCraft(Stage stage, GameController game) {
         // Should load and display the inventory panel with corresponding info
-        List<Recipe> recipes = new ArrayList<>();
-        Map<Item, Integer> ingredientList = new HashMap<>();
-        ingredientList.put(new Item("Milk", "", 10), 5);
-        ingredientList.put(new Item("Bacteria", "", 1), 5);
-
-        Map<Item, Integer> resultList = new HashMap<>();
-        resultList.put(new Item("Cheese", "", 100), 1);
-
-        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
-        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
-        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
-        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
+        List<Recipe> recipes = game.getRecipes();
 
         BorderPane root = new BorderPane();
         VBox center = new VBox();
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
 
-        Scene scene = new Scene(root, 800, 800);
+        Scene scene = new Scene(root, 1920, 1040);
 
         Text panelTitle = new Text();
 
@@ -319,7 +313,7 @@ public class GameDriver extends Application {
                 products += product.getName() + " x" + recipe.getResult().get(product) + " | ";
             }
             Text recipeName = new Text(recipe.getName());
-            Text recipeDescription = new Text(recipe.getDescription());
+            Text recipeDescription = new Text("");
             Text ingredientText = new Text(ingredients);
             Text resultText = new Text(products);
             Button craftButton = new Button("_Craft");
@@ -352,12 +346,16 @@ public class GameDriver extends Application {
 
         bottom.getChildren().add(backButton);
 
+        ScrollPane scrollPane = new ScrollPane(center);
+        scrollPane.setFitToWidth(true);
+
         root.setCenter(center);
         root.setTop(top);
         root.setBottom(bottom);
 
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -365,7 +363,7 @@ public class GameDriver extends Application {
      * Drives the game controller to start the game.
      */
     public static void main(String[] args) {
-        GameController game = GameController.getInstance();
+        game = GameController.getInstance();
         game.startGame();
         launch(args);
     }
