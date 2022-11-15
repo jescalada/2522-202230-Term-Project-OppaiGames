@@ -1,0 +1,24 @@
+Copper Ore | Some pale orange ore. Can be smelted to make bars. | 3
+Silver Ore | Some shiny ore. Can be smelted to make bars. | 5
+Gold Ore | Some shiny golden ore. Can be smelted to make bars. | 8
+Platinum Ore | Some beautiful shining ore. Can be smelted to make bars. | 12
+Coal | Some ore that can be made to fuel. | 1
+Copper Bar | A copper bar. | 50
+Silver Bar | A silver bar. | 110
+Gold Bar | A shiny golden bar. | 320
+Platinum Bar | A beautiful platinum bar. | 850
+Copper Axe | Some pale orange ore. Can be smelted to make bars. | 550
+Silver Axe | Some pale orange ore. Can be smelted to make bars. | 1400
+Gold Axe | Some pale orange ore. Can be smelted to make bars. | 5400
+Platinum Axe | Some pale orange ore. Can be smelted to make bars. | 22000
+Gorgeous Chest | A beautiful ornamented treasure chest. | 160000
+Wood | Some rough wood. | 1
+Wood Plank | A wooden plank. | 5
+Milk | Yummy milk. | 2
+Cheese | Delicious cheese. | 12
+Sugar | Sweet. | 3
+Egg | Cluck cluck. | 5
+Blueberry | Juicy blue fruit. | 1
+Strawberry | Juicy red fruit. | 2
+Blueberry Pie | Yummy blueberry pie. | 120
+Fruit Smoothie | Nutritious and delicious. | 55
