@@ -1,7 +1,9 @@
 package ca.bcit.comp2522.termproject.oppaigames;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 
 public class GameController {
 
@@ -12,12 +14,15 @@ public class GameController {
     private final List<Recipe> recipes;
     private final List<Item> items;
 
+    private static final String RECIPE_FILE_LOCATION = "src/main/resources/ca/bcit/comp2522/termproject/oppaigames/recipes.txt";
+    private static final String ITEM_FILE_LOCATION = "src/main/resources/ca/bcit/comp2522/termproject/oppaigames/items.txt";
+
     private GameController() {
         player = new Player("Pepe");
         shop = new Shop();
-        gatheringPoints = loadGatheringPoints();
-        recipes = loadRecipes();
         items = loadItems();
+        recipes = loadRecipes();
+        gatheringPoints = loadGatheringPoints();
     }
 
     /**
@@ -37,6 +42,7 @@ public class GameController {
      * @return
      */
     public List<GatheringPoint> loadGatheringPoints() {
+
         return gatheringPoints;
     }
 
@@ -91,10 +97,27 @@ public class GameController {
 
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
     /**
      * Starts the game.
      */
     public void startGame() {
 
+    }
+
+    private Item findItemByName(String name) throws Exception {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        throw new Exception(name + " does not exist!");
     }
 }
