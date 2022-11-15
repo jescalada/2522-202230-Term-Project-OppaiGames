@@ -280,8 +280,85 @@ public class GameDriver extends Application {
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
         stage.show();
     }
-    private void showCraft() {
+    private void showCraft(Stage stage, GameController game) {
         // Should load and display the inventory panel with corresponding info
+        List<Recipe> recipes = new ArrayList<>();
+        Map<Item, Integer> ingredientList = new HashMap<>();
+        ingredientList.put(new Item("Milk", "", 10), 5);
+        ingredientList.put(new Item("Bacteria", "", 1), 5);
+
+        Map<Item, Integer> resultList = new HashMap<>();
+        resultList.put(new Item("Cheese", "", 100), 1);
+
+        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
+        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
+        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
+        recipes.add(new Recipe("Make Cheese", "", ingredientList, resultList));
+
+        BorderPane root = new BorderPane();
+        VBox center = new VBox();
+        StackPane top = new StackPane();
+        StackPane bottom = new StackPane();
+
+        Scene scene = new Scene(root, 800, 800);
+
+        Text panelTitle = new Text();
+
+        panelTitle.setText("Crafting");
+        panelTitle.setScaleX(3);
+        panelTitle.setScaleY(3);
+
+        for (Recipe recipe : recipes) {
+            HBox box = new HBox();
+            String ingredients = "Needs: ";
+            for (Item ingredient : recipe.getIngredients().keySet()) {
+                ingredients += ingredient.getName() + " x" + recipe.getIngredients().get(ingredient) + " | ";
+            }
+            String products = "Makes: ";
+            for (Item product : recipe.getResult().keySet()) {
+                products += product.getName() + " x" + recipe.getResult().get(product) + " | ";
+            }
+            Text recipeName = new Text(recipe.getName());
+            Text recipeDescription = new Text(recipe.getDescription());
+            Text ingredientText = new Text(ingredients);
+            Text resultText = new Text(products);
+            Button craftButton = new Button("_Craft");
+
+            box.getChildren().addAll(recipeName, recipeDescription, ingredientText, resultText, craftButton);
+
+            box.setScaleX(1.2);
+            box.setScaleY(1.2);
+            BackgroundFill background_fill = new BackgroundFill(Color.PINK,
+                    CornerRadii.EMPTY, Insets.EMPTY);
+            Background background = new Background(background_fill);
+            box.setBackground(background);
+            box.setPadding(new Insets(10));
+            center.getChildren().add(box);
+            box.setAlignment(Pos.CENTER);
+        }
+
+        Button backButton = new Button("_Back");
+        backButton.setOnAction(event -> {
+            start(stage);
+        });
+        backButton.setMinSize(100,100);
+
+        center.setPadding(new Insets(40));
+        center.setSpacing(20);
+        center.setAlignment(Pos.CENTER);
+
+        top.getChildren().addAll(panelTitle);
+        top.setPadding(new Insets(20));
+
+        bottom.getChildren().add(backButton);
+
+        root.setCenter(center);
+        root.setTop(top);
+        root.setBottom(bottom);
+
+        stage.setScene(scene);
+        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.show();
     }
 
     /**
