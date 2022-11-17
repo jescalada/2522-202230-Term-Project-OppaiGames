@@ -1,5 +1,7 @@
 package ca.bcit.comp2522.termproject.oppaigames;
 
+import javafx.scene.effect.Light;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,9 +18,10 @@ public class GameController {
 
     private static final String RECIPE_FILE_LOCATION = "src/main/resources/ca/bcit/comp2522/termproject/oppaigames/recipes.txt";
     private static final String ITEM_FILE_LOCATION = "src/main/resources/ca/bcit/comp2522/termproject/oppaigames/items.txt";
+    private static final String GATHERINGPOINT_FILE_LOCATION = "src/main/resources/ca/bcit/comp2522/termproject/oppaigames/gatheringpoints.txt";
 
     private GameController() {
-        player = new Player("Pepe");
+        player = new Player("Chris");
         shop = new Shop();
         items = loadItems();
         recipes = loadRecipes();
@@ -42,7 +45,45 @@ public class GameController {
      * @return
      */
     public List<GatheringPoint> loadGatheringPoints() {
-
+        List<GatheringPoint> gatheringPoints = new ArrayList<>();
+        Scanner sc;
+        try {
+            // pass the path to the file as a parameter
+            File file = new File(GATHERINGPOINT_FILE_LOCATION);
+            sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                // Parse recipes line by line
+                String[] pointParameters = sc.nextLine().split(" \\| ");
+                String pointName = pointParameters[0];
+                String pointDescription = pointParameters[1];
+                Map<Item, Integer> quantities = new HashMap<>();
+                String[] yieldQuantities = pointParameters[2].split(", ");
+                for (String resource : yieldQuantities) {
+                    String[] resourceQuantity = resource.split("x ");
+                    try {
+                        Item item = findItemByName(resourceQuantity[1]);
+                        quantities.put(item, Integer.valueOf(resourceQuantity[0]));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                Map<Item, Float> chances = new HashMap<>();
+                String[] yieldChances = pointParameters[3].split(", ");
+                for (String resource : yieldChances) {
+                    String[] resourceChance = resource.split("% ");
+                    try {
+                        Item item = findItemByName(resourceChance[1]);
+                        chances.put(item, Float.valueOf(resourceChance[0]) / 100);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                GatheringPoint point = new GatheringPoint(pointName, pointDescription, quantities, chances);
+                gatheringPoints.add(point);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return gatheringPoints;
     }
 
@@ -79,7 +120,6 @@ public class GameController {
                     String[] productQuantity = product.split("x ");
                     try {
                         Item item = findItemByName(productQuantity[1]);
-                        ingredients.put(item, Integer.valueOf(productQuantity[0]));
                         products.put(item, Integer.valueOf(productQuantity[0]));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -123,8 +163,22 @@ public class GameController {
     /**
      * Handles player request to gather items at gathering points.
      */
-    public void processGather() {
-
+    public String processGather(String gatheringPointName) {
+        try {
+            GatheringPoint point = findGatheringPointByName(gatheringPointName);
+            Item item = point.getRandomItem();
+            if (item == null) {
+                return "You didn't gather anything!";
+            } else {
+                int quantityGathered = point.getYieldQuantitiesForItem(item);
+                player.addItem(item, quantityGathered);
+                return "You gathered " + quantityGathered + " " +  item.getName();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("You done goofed buddy");
+        }
+        return "This is not supposed to happen. Please contact Chris Thompson to resolve this matter.";
     }
 
     /**
@@ -163,17 +217,30 @@ public class GameController {
         return recipes;
     }
 
+    public Map<Item, Integer> getPlayerInventory() {
+        return player.getInventory();
+    }
+
     /**
      * Starts the game.
      */
     public void startGame() {
-
+        // todo add game loading logic
     }
 
     private Item findItemByName(String name) throws Exception {
         for (Item item : items) {
             if (item.getName().equals(name)) {
                 return item;
+            }
+        }
+        throw new Exception(name + " does not exist!");
+    }
+
+    private GatheringPoint findGatheringPointByName(String name) throws Exception {
+        for (GatheringPoint point : gatheringPoints) {
+            if (point.getName().equals(name)) {
+                return point;
             }
         }
         throw new Exception(name + " does not exist!");
