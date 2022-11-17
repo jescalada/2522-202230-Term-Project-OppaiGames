@@ -1,11 +1,12 @@
 package ca.bcit.comp2522.termproject.oppaigames;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
     private final String name;
     private double money = 1000.00;
-    private final Map<Item, Integer> inventory = null;
+    private final Map<Item, Integer> inventory;
 
     /**
      * Constructs a player with the name.
@@ -13,6 +14,7 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
+        this.inventory = new HashMap<>();
     }
 
     /**
@@ -46,7 +48,12 @@ public class Player {
      * @param quantity an integer representing the amount of item to be added
      */
     public void addItem(Item item, int quantity) {
-        inventory.put(item, inventory.get(item) + quantity);
+        if (item == null) return;
+        if (inventory.containsKey(item)) {
+            inventory.put(item, inventory.get(item) + quantity);
+        } else {
+            inventory.put(item, quantity);
+        }
     }
 
     /**
@@ -72,5 +79,9 @@ public class Player {
      */
     public void deductMoney(double moneySpent) {
         money = money - moneySpent;
+    }
+
+    public Map<Item, Integer> getInventory() {
+        return inventory;
     }
 }
