@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
@@ -70,11 +71,7 @@ public class GameDriver extends Application {
     }
 
     private void showInventory(Stage stage, GameController game) {
-        Map<Item, Integer> inventory = new HashMap<>();
-        inventory.put(new Item("Item 1", "First item", 10), 5);
-        inventory.put(new Item("Item 2", "Second item", 15), 2);
-        inventory.put(new Item("Item 3", "Third item", 7), 3);
-        inventory.put(new Item("Item 4", "Fourth item", 20), 8);
+        Map<Item, Integer> inventory = game.getPlayerInventory();
 
         BorderPane root = new BorderPane();
         TilePane center = new TilePane();
@@ -131,10 +128,7 @@ public class GameDriver extends Application {
         stage.show();
     }
     private void showMap(Stage stage, GameController game) {
-        List<GatheringPoint> gatheringPoints = new ArrayList<>();
-        gatheringPoints.add(new GatheringPoint("Abandoned Mine", "An abandoned mine.", null, null));
-        gatheringPoints.add(new GatheringPoint("Enchanted Forest", "A beautiful forest.", null, null));
-        gatheringPoints.add(new GatheringPoint("Moo Moo Farm", "A farm with lots of cows.", null, null));
+        List<GatheringPoint> gatheringPoints = game.loadGatheringPoints();
 
         BorderPane root = new BorderPane();
         TilePane center = new TilePane();
@@ -148,13 +142,21 @@ public class GameDriver extends Application {
 
         for (GatheringPoint point : gatheringPoints) {
             VBox box = new VBox();
-            Text itemName = new Text(point.getName());
-            Text itemDescription = new Text("                     ");
+            Text pointName = new Text(point.getName());
+            Text pointDescription = new Text("                     ");
             Button gatherButton = new Button("_Gather");
+
+            gatherButton.setOnAction(event -> {
+                String gathered = game.processGather(point.getName());
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setHeaderText("Gathering from " + point.getName() + "...");
+                a.setContentText(gathered);
+                a.show();
+            });
 
             gatherButton.setMinSize(100, 50);
 
-            box.getChildren().addAll(itemName, itemDescription, gatherButton);
+            box.getChildren().addAll(pointName, pointDescription, gatherButton);
             box.setScaleX(1);
             box.setScaleY(1);
             BackgroundFill background_fill = new BackgroundFill(Color.PALEGREEN,
