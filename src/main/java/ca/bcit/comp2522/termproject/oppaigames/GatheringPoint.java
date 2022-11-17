@@ -1,10 +1,12 @@
 package ca.bcit.comp2522.termproject.oppaigames;
 
+import java.util.List;
 import java.util.Map;
 
 public class GatheringPoint {
     private final String name;
     private final String description;
+
     private final Map<Item, Integer> itemYields;
     private final Map<Item, Float> yieldOdds;
 
@@ -44,5 +46,19 @@ public class GatheringPoint {
      */
     public String getDescription() {
         return description;
+    }
+
+    public Integer getYieldQuantitiesForItem(Item item) {
+        return itemYields.get(item);
+    }
+
+    public Item getRandomItem() {
+        // Very naive implementation
+        double roll = Math.random();
+        for (Item item: itemYields.keySet()) {
+            float odds = yieldOdds.get(item);
+            if (roll < odds) return item;
+        }
+        return null;
     }
 }
