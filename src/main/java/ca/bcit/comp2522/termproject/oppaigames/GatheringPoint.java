@@ -25,14 +25,6 @@ public class GatheringPoint {
     }
 
     /**
-     * Gathers item(s) at a specific gathering point.
-     * @return an Item representing one or more items
-     */
-    public Item gather() {
-        return new Item("Stefan", "human", 6);
-    }
-
-    /**
      * Gets the name of a gathering point.
      * @return a string representing the name of a general point
      */
@@ -48,10 +40,10 @@ public class GatheringPoint {
         return description;
     }
 
-    public Integer getYieldQuantitiesForItem(Item item) {
-        return itemYields.get(item);
-    }
-
+    /**
+     * Gathers item randomly at a specific gathering point.
+     * @return the item gathered as Item
+     */
     public Item getRandomItem() {
         // Very naive implementation
         double roll = Math.random();
@@ -61,4 +53,14 @@ public class GatheringPoint {
         }
         return null;
     }
+
+    /**
+     * Returns the yield quantity for a gathered item.
+     * @return the quantity of item gathered as Integer
+     */
+    public Integer getYieldQuantitiesForItem(Item item) {
+        return itemYields.get(item);
+    }
+
+
 }
