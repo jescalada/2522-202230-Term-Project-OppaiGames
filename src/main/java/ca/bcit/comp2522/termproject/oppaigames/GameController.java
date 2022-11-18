@@ -203,6 +203,7 @@ public class GameController {
                 if (!player.getInventory().containsKey(requiredItem) || player.getInventory().get(requiredItem) <= requiredNumber) {
                     hasRequiredItems = false;
                     recipeResult += "You do not have enough ingredients to craft this product";
+                    break;
                 }
             }
             if (hasRequiredItems) {

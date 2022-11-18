@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -20,11 +21,11 @@ public class GameDriver extends Application {
 
     @Override
     public void start(Stage stage) {
-        BorderPane root = new BorderPane();
         HBox center = new HBox();
+        BorderPane root = new BorderPane();
         StackPane top = new StackPane();
 
-        Scene scene = new Scene(root, 1920, 1040);
+        Scene scene = new Scene(root, 1040, 1040);
 
         Text currencyLabel = new Text();
 
@@ -127,6 +128,7 @@ public class GameDriver extends Application {
         stage.setMaximized(true);
         stage.show();
     }
+
     private void showMap(Stage stage, GameController game) {
         List<GatheringPoint> gatheringPoints = game.loadGatheringPoints();
 
@@ -192,6 +194,7 @@ public class GameDriver extends Application {
         stage.setMaximized(true);
         stage.show();
     }
+
     private void showShop(Stage stage, GameController game) {
         Map<Item, Integer> itemsInStock = new HashMap<>();
         itemsInStock.put(new Item("Pepe Plushy", "A sad frog.", 10), 5);
@@ -289,7 +292,7 @@ public class GameDriver extends Application {
     }
     private void showCraft(Stage stage, GameController game) {
         // Should load and display the inventory panel with corresponding info
-        List<Recipe> recipes = game.getRecipes();
+        List<Recipe> recipes = game.loadRecipes();
 
         BorderPane root = new BorderPane();
         VBox center = new VBox();
@@ -311,14 +314,22 @@ public class GameDriver extends Application {
                 ingredients += ingredient.getName() + " x" + recipe.getIngredients().get(ingredient) + " | ";
             }
             String products = "Makes: ";
-            for (Item product : recipe.getResult().keySet()) {
-                products += product.getName() + " x" + recipe.getResult().get(product) + " | ";
+            for (Item product : recipe.getProducts().keySet()) {
+                products += product.getName() + " x" + recipe.getProducts().get(product) + " | ";
             }
             Text recipeName = new Text(recipe.getName());
             Text recipeDescription = new Text("");
             Text ingredientText = new Text(ingredients);
             Text resultText = new Text(products);
             Button craftButton = new Button("_Craft");
+
+            craftButton.setOnAction(event -> {
+                String crafted = game.processRecipe(recipe.getName());
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setHeaderText(recipe.getName() + "...");
+                a.setContentText(crafted);
+                a.show();
+            });
 
             box.getChildren().addAll(recipeName, recipeDescription, ingredientText, resultText, craftButton);
 

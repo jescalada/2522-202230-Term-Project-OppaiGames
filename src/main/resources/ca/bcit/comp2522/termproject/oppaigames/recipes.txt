@@ -6,8 +6,3 @@ Make Copper Bar | Smelt a copper bar out of ore. | 10x Copper Ore, 4x Coal | 1x 
 Make Silver Bar | Smelt a silver bar out of ore. | 15x Silver Ore, 7x Coal | 1x Silver Bar
 Make Gold Bar | Smelt a gold bar out of ore. | 25x Gold Ore, 15x Coal | 1x Gold Bar
 Make Platinum Bar | Smelt a platinum bar out of ore. | 50x Platinum Ore, 30x Coal | 1x Platinum Bar
-Make Copper Axe | Make an axe out of copper. | 10x Copper Bar, 5x Wood Plank | 1x Copper Axe
-Make Silver Axe | Make an axe out of silver. | 12x Silver Bar, 5x Wood Plank | 1x Silver Axe
-Make Gold Axe | Make an axe out of gold. | 15x Gold Bar, 5x Wood Plank | 1x Gold Axe
-Make Platinum Axe | Make an axe out of platinum. | 20x Platinum Bar, 5x Wood Plank | 1x Platinum Axe
-Make Gorgeous Chest | Make a beautiful treasure chest. | 100x Platinum Bar, 100x Gold Bar, 50x Wood Plank | 1x Gorgeous Chest
