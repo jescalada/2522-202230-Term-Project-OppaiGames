@@ -88,14 +88,14 @@ public class GameDriver extends Application {
 
         for (Item item : inventory.keySet()) {
             VBox box = new VBox();
-            Text itemName = new Text(item.getName());
+            Text itemName = new Text("        " + item.getName() + "        ");
             Text itemDescription = new Text("               ");
             Text itemValue = new Text(item.getValue() + "G");
             Text itemQuantity = new Text("Qty: " + inventory.get(item));
 
             box.getChildren().addAll(itemName, itemDescription, itemValue, itemQuantity);
-            box.setScaleX(1.5);
-            box.setScaleY(1.5);
+            box.setScaleX(1.3);
+            box.setScaleY(1.3);
             BackgroundFill background_fill = new BackgroundFill(Color.PINK,
                     CornerRadii.EMPTY, Insets.EMPTY);
             Background background = new Background(background_fill);
