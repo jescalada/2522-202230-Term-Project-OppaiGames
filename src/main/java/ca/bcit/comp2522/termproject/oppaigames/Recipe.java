@@ -6,20 +6,20 @@ public class Recipe {
     private final String name;
     private final String description;
     private final Map<Item, Integer> ingredients;
-    private final Map<Item, Integer> result;
+    private final Map<Item, Integer> products;
 
     /**
      * Constructs a recipe with the specified information.
      * @param name a string
      * @param description a string
      * @param ingredients a map of ingredient items and numbers needed to make a product
-     * @param result a map of product items and their numbers
+     * @param products a map of product items and their numbers
      */
-    public Recipe(String name, String description, Map<Item, Integer> ingredients, Map<Item, Integer> result) {
+    public Recipe(String name, String description, Map<Item, Integer> ingredients, Map<Item, Integer> products) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
-        this.result = result;
+        this.products = products;
     }
 
     /**
@@ -50,7 +50,7 @@ public class Recipe {
      * Gets the product result of a recipe.
      * @return a map representing the product item and numbers
      */
-    public Map<Item, Integer> getResult() {
-        return result;
+    public Map<Item, Integer> getProducts() {
+        return products;
     }
 }

@@ -41,6 +41,13 @@ public class GameController {
     }
 
     /**
+     * Starts the game.
+     */
+    public void startGame() {
+        // todo add game loading logic
+    }
+
+    /**
      * Loads a couple of gathering points.
      * @return
      */
@@ -182,6 +189,42 @@ public class GameController {
     }
 
     /**
+     * Handles player request to process recipes and produce desired items.
+     */
+    public String processRecipe(String recipeName) {
+        try {
+            Recipe recipe = findRecipeByName(recipeName);
+            Map<Item, Integer> requiredIngredients = recipe.getIngredients();
+            boolean hasRequiredItems = true;
+            String recipeResult = "";
+            for (Map.Entry<Item, Integer> ingredient : requiredIngredients.entrySet()) {
+                Item requiredItem = ingredient.getKey();
+                Integer requiredNumber = ingredient.getValue();
+                if (!player.getInventory().containsKey(requiredItem) || player.getInventory().get(requiredItem) <= requiredNumber) {
+                    hasRequiredItems = false;
+                    recipeResult += "You do not have enough ingredients to craft this product";
+                }
+            }
+            if (hasRequiredItems) {
+                for (Item ingredient: recipe.getIngredients().keySet()) {
+                    player.deductItem(ingredient, recipe.getIngredients().get(ingredient));
+                }
+                for (Item product : recipe.getProducts().keySet()) {
+                    int quantityCrafted = recipe.getProducts().get(product);
+                    player.addItem(product, quantityCrafted);
+                    recipeResult += "You crafted " + 1 + " " + product.getName();
+                }
+            }
+            return recipeResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("You done goofed buddy");
+        }
+        return "This is not supposed to happen. Please contact Chris Thompson to resolve this matter.";
+    }
+
+
+    /**
      * Handles player request to buy.
      */
     public void processBuy() {
@@ -196,36 +239,14 @@ public class GameController {
     }
 
     /**
-     * Handles player request to process recipes and produce desired items.
-     */
-    public void processRecipe() {
-
-    }
-
-    /**
      * Clears the shop and stocks it with some initial items.
      */
     public void restockShop() {
 
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public List<Recipe> getRecipes() {
-        return recipes;
-    }
-
     public Map<Item, Integer> getPlayerInventory() {
         return player.getInventory();
-    }
-
-    /**
-     * Starts the game.
-     */
-    public void startGame() {
-        // todo add game loading logic
     }
 
     private Item findItemByName(String name) throws Exception {
@@ -241,6 +262,15 @@ public class GameController {
         for (GatheringPoint point : gatheringPoints) {
             if (point.getName().equals(name)) {
                 return point;
+            }
+        }
+        throw new Exception(name + " does not exist!");
+    }
+
+    private Recipe findRecipeByName(String name) throws Exception {
+        for (Recipe recipe : recipes) {
+            if (recipe.getName().equals(name)) {
+                return recipe;
             }
         }
         throw new Exception(name + " does not exist!");
