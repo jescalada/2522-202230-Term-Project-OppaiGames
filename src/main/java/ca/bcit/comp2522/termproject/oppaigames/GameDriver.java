@@ -79,56 +79,19 @@ public class GameDriver extends Application {
      */
     private void showInventory(Stage stage, GameController game) {
         Map<Item, Integer> inventory = game.getPlayerInventory();
-
         BorderPane root = new BorderPane();
         TilePane center = new TilePane();
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-
-        Scene scene = new Scene(root, 1920, 1040);
-
-        Text panelTitle = new Text();
-
-        panelTitle.setText("Inventory");
-        panelTitle.setScaleX(3);
-        panelTitle.setScaleY(3);
-
-        for (Item item : inventory.keySet()) {
-            VBox box = new VBox();
-            Text itemName = new Text("        " + item.getName() + "        ");
-            Text itemDescription = new Text("               ");
-            Text itemValue = new Text(item.getValue() + "G");
-            Text itemQuantity = new Text("Qty: " + inventory.get(item));
-
-            box.getChildren().addAll(itemName, itemDescription, itemValue, itemQuantity);
-            box.setScaleX(1.3);
-            box.setScaleY(1.3);
-            BackgroundFill background_fill = new BackgroundFill(Color.PINK,
-                    CornerRadii.EMPTY, Insets.EMPTY);
-            Background background = new Background(background_fill);
-            box.setBackground(background);
-            box.setPadding(new Insets(10));
-            center.getChildren().add(box);
-        }
-
-        Button backButton = new Button("_Back");
-        backButton.setOnAction(event -> {
-            start(stage);
-        });
-        backButton.setMinSize(100,100);
-
+        Scene scene = new Scene(root, 1200, 800);
+        setPanelTitle(top, "Inventory");
+        setInventoryFrontend(inventory, center);
+        placeBackButton(stage, bottom);
         center.setPadding(new Insets(20));
         center.setAlignment(Pos.CENTER);
-
-        top.getChildren().addAll(panelTitle);
-        top.setPadding(new Insets(20));
-
-        bottom.getChildren().add(backButton);
-
         root.setCenter(center);
         root.setTop(top);
         root.setBottom(bottom);
-
         stage.setScene(scene);
         stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
         stage.setMaximized(true);
