@@ -62,6 +62,7 @@ public class Player {
      * @param quantity an integer representing the amount of item to be deducted
      */
     public void deductItem(Item item, int quantity) {
+        if (item == null || !inventory.containsKey(item)) return;
         inventory.put(item, inventory.get(item) - quantity);
     }
 

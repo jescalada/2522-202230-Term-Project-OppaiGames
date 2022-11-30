@@ -228,23 +228,61 @@ public class GameController {
     /**
      * Handles player request to buy.
      */
-    public void processBuy() {
-
+    public String processBuy(String itemName) {
+        String result = "";
+        try {
+            Item item = findItemByName(itemName);
+            int remainingMoney = (int)player.getMoney() - item.getValue() * 2;
+            if (remainingMoney < 0) {
+                result += "You still need " + remainingMoney * -1 + "G to buy some " + itemName;
+                return result;
+            }
+//            shop.deductItemToStock(item, 1);
+            player.deductMoney(item.getValue() * 2);
+            player.addItem(item, 1);
+            result += "Successfully bought " + itemName + " for " + item.getValue() * 2 + "G.";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
      * Handles player request to sell.
      */
-    public void processSell() {
-
+    public String processSell(String itemName) {
+        String result = "";
+        try {
+            Item item = findItemByName(itemName);
+            if (!player.getInventory().containsKey(itemName)) {
+                result += "You do not have this item, cannot sell";
+                return result;
+            }
+            player.addMoney(item.getValue() * 0.5);
+            player.deductItem(item, 1);
+            int moneyObtained = (int)(item.getValue() * 0.5);
+            result += "Successfully sold " + itemName + " for " + moneyObtained + "G.";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
      * Clears the shop and stocks it with some initial items.
      */
     public void restockShop() {
-
+        shop.clearShopStock();
+        shop.addItemToStock(new Item("Coal", "Some ore that can be made to fuel.", 1), 75);
+        shop.addItemToStock(new Item("Copper Ore", "Some pale orange ore. Can be smelted to make bars.", 3), 20);
+        shop.addItemToStock(new Item("Silver Bar", "A silver bar.", 110), 10);
+        shop.addItemToStock(new Item("Gold Axe", "A golden axe. Can be used to cut trees.", 5400), 1);
     }
+
+    public Map<Item, Integer> getItemsInStock() {
+        return shop.getItemsInStock();
+    }
+
 
     public Map<Item, Integer> getPlayerInventory() {
         return player.getInventory();

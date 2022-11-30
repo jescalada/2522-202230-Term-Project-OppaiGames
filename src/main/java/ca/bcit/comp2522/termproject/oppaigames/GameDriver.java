@@ -212,17 +212,9 @@ public class GameDriver extends Application {
      * @param game the game instance containing all the model data
      */
     private void showShop(Stage stage, GameController game) {
-        Map<Item, Integer> itemsInStock = new HashMap<>();
-        itemsInStock.put(new Item("Pepe Plushy", "A sad frog.", 10), 5);
-        itemsInStock.put(new Item("Milk", "Yummy milk.", 50), 3);
-        itemsInStock.put(new Item("Gold Bar", "A shiny 24K gold bar.", 1000), 8);
-
-        Map<Item, Integer> inventory = new HashMap<>();
-        inventory.put(new Item("Item 1", "First item", 10), 5);
-        inventory.put(new Item("Item 2", "Second item", 15), 2);
-        inventory.put(new Item("Item 3", "Third item", 7), 3);
-        inventory.put(new Item("Item 4", "Fourth item", 20), 8);
-
+        game.restockShop();
+        Map<Item, Integer> itemsInStock = game.getItemsInStock();
+        Map<Item, Integer> inventory = game.getPlayerInventory();
 
         BorderPane root = new BorderPane();
         HBox center = new HBox();
@@ -250,6 +242,13 @@ public class GameDriver extends Application {
             Text itemName = new Text(item.getName());
             Text itemDescription = new Text(item.getDescription());
             Button buyButton = new Button("_Buy");
+            buyButton.setOnAction(event -> {
+                String bought = game.processBuy(itemName.getText());
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setHeaderText("Buying some " + itemName.getText() + "...");
+                a.setContentText(bought);
+                a.show();
+            });
             Text quantityInStock = new Text("In Stock: " + itemsInStock.get(item));
 
             box.getChildren().addAll(itemName, itemDescription, quantityInStock, buyButton);
@@ -268,7 +267,13 @@ public class GameDriver extends Application {
             Text itemValue = new Text(item.getValue() + "G");
             Text itemQuantity = new Text("Qty: " + inventory.get(item));
             Button sellButton = new Button("_Sell");
-
+            sellButton.setOnAction(event -> {
+                String sold = game.processSell(itemName.getText());
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setHeaderText("Selling some " + itemName.getText() + "...");
+                a.setContentText(sold);
+                a.show();
+            });
             box.getChildren().addAll(itemName, itemValue, itemQuantity, sellButton);
             BackgroundFill background_fill = new BackgroundFill(Color.PINK,
                     CornerRadii.EMPTY, Insets.EMPTY);
