@@ -235,7 +235,7 @@ public class GameDriver extends Application {
 
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-        Scene scene = new Scene(root, 1920, 1040);
+        Scene scene = new Scene(root, 1200, 800);
 
         Text panelTitle = new Text("Shop");
         Text leftPanelTitle = new Text("For Sale:");
@@ -317,22 +317,40 @@ public class GameDriver extends Application {
      * @param game the game instance containing all the model data
      */
     private void showCraft(Stage stage, GameController game) {
-        // Should load and display the inventory panel with corresponding info
         List<Recipe> recipes = game.loadRecipes();
-
         BorderPane root = new BorderPane();
         VBox center = new VBox();
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-
-        Scene scene = new Scene(root, 1920, 1040);
-
+        Scene scene = new Scene(root, 1200, 800);
         Text panelTitle = new Text();
-
         panelTitle.setText("Crafting");
         panelTitle.setScaleX(3);
         panelTitle.setScaleY(3);
+        setCraftingFrontend(recipes, center);
+        placeBackButton(stage, bottom);
+        center.setPadding(new Insets(40));
+        center.setSpacing(20);
+        center.setAlignment(Pos.CENTER);
+        top.getChildren().addAll(panelTitle);
+        top.setPadding(new Insets(20));
+        ScrollPane scrollPane = new ScrollPane(center);
+        scrollPane.setFitToWidth(true);
+        root.setCenter(center);
+        root.setTop(top);
+        root.setBottom(bottom);
+        stage.setScene(scene);
+        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
+        stage.show();
+    }
 
+    /**
+     * Sets up the frontend for the crafting page.
+     * @param recipes a list of the available recipes
+     * @param root the root pane onto which to append the recipes
+     */
+    private void setCraftingFrontend(List<Recipe> recipes, Pane root) {
         for (Recipe recipe : recipes) {
             HBox box = new HBox();
             String ingredients = "Needs: ";
@@ -348,7 +366,6 @@ public class GameDriver extends Application {
             Text ingredientText = new Text(ingredients);
             Text resultText = new Text(products);
             Button craftButton = new Button("_Craft");
-
             craftButton.setOnAction(event -> {
                 String crafted = game.processRecipe(recipe.getName());
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -356,9 +373,7 @@ public class GameDriver extends Application {
                 a.setContentText(crafted);
                 a.show();
             });
-
             box.getChildren().addAll(recipeName, recipeDescription, ingredientText, resultText, craftButton);
-
             box.setScaleX(1.2);
             box.setScaleY(1.2);
             BackgroundFill background_fill = new BackgroundFill(Color.PINK,
@@ -366,36 +381,9 @@ public class GameDriver extends Application {
             Background background = new Background(background_fill);
             box.setBackground(background);
             box.setPadding(new Insets(10));
-            center.getChildren().add(box);
+            root.getChildren().add(box);
             box.setAlignment(Pos.CENTER);
         }
-
-        Button backButton = new Button("_Back");
-        backButton.setOnAction(event -> {
-            start(stage);
-        });
-        backButton.setMinSize(100,100);
-
-        center.setPadding(new Insets(40));
-        center.setSpacing(20);
-        center.setAlignment(Pos.CENTER);
-
-        top.getChildren().addAll(panelTitle);
-        top.setPadding(new Insets(20));
-
-        bottom.getChildren().add(backButton);
-
-        ScrollPane scrollPane = new ScrollPane(center);
-        scrollPane.setFitToWidth(true);
-
-        root.setCenter(center);
-        root.setTop(top);
-        root.setBottom(bottom);
-
-        stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
-        stage.show();
     }
 
     /**
