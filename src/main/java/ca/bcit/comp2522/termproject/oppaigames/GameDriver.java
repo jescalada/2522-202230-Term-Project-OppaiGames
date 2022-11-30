@@ -29,7 +29,7 @@ public class GameDriver extends Application {
 
         Text currencyLabel = new Text();
 
-        currencyLabel.setText("Gold: 1000G");
+        currencyLabel.setText((int)game.getPlayerMoney() + "G");
         currencyLabel.setScaleX(3);
         currencyLabel.setScaleY(3);
 

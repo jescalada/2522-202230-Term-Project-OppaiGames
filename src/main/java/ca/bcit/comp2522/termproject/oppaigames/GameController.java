@@ -276,4 +276,8 @@ public class GameController {
         }
         throw new Exception(name + " does not exist!");
     }
+
+    public double getPlayerMoney() {
+        return player.getMoney();
+    }
 }
