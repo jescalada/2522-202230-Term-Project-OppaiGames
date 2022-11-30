@@ -26,20 +26,33 @@ public class GameDriver extends Application {
         HBox center = new HBox();
         BorderPane root = new BorderPane();
         StackPane top = new StackPane();
-
-        Scene scene = new Scene(root, 1040, 1040);
-
+        Scene scene = new Scene(root, 1200, 800);
         Text currencyLabel = new Text();
-
         currencyLabel.setText((int)game.getPlayerMoney() + "G");
         currencyLabel.setScaleX(3);
         currencyLabel.setScaleY(3);
+        titleButtonsSetup(stage, center);
+        center.setSpacing(10);
+        center.setAlignment(Pos.CENTER);
+        top.getChildren().addAll(currencyLabel);
+        top.setPadding(new Insets(20));
+        root.setCenter(center);
+        root.setTop(top);
+        stage.setScene(scene);
+        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.show();
+    }
 
+    /**
+     * Sets up the buttons in the main game page.
+     * @param stage the stage onto which to display
+     * @param root the root panel to append the buttons
+     */
+    private void titleButtonsSetup(Stage stage, Pane root) {
         Button inventoryButton = new Button("_Inventory");
         Button mapButton = new Button("_Map");
         Button shopButton = new Button("_Shop");
         Button craftButton = new Button("_Craft");
-
         inventoryButton.setOnAction(event -> {
             showInventory(stage, game);
         });
@@ -52,27 +65,18 @@ public class GameDriver extends Application {
         craftButton.setOnAction(event -> {
             showCraft(stage, game);
         });
-
-        center.getChildren().addAll(inventoryButton, mapButton, shopButton, craftButton);
-        center.setSpacing(10);
-        center.setAlignment(Pos.CENTER);
         inventoryButton.setMinSize(100, 100);
         mapButton.setMinSize(100, 100);
         shopButton.setMinSize(100, 100);
         craftButton.setMinSize(100, 100);
-
-        top.getChildren().addAll(currencyLabel);
-        top.setPadding(new Insets(20));
-
-        root.setCenter(center);
-        root.setTop(top);
-
-        stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
-        stage.show();
+        root.getChildren().addAll(inventoryButton, mapButton, shopButton, craftButton);
     }
 
+    /**
+     * Displays the inventory onto the main stage.
+     * @param stage the JavaFX stage onto which to display
+     * @param game the game instance containing all the model data
+     */
     private void showInventory(Stage stage, GameController game) {
         Map<Item, Integer> inventory = game.getPlayerInventory();
 
