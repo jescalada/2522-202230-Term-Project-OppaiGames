@@ -135,6 +135,64 @@ public class GameDriver extends Application {
         stage.show();
     }
 
+    /**
+     * Places a back button on a pane.
+     * @param stage the stage in which we're placing objects
+     * @param root the pane onto which to append the back button.
+     */
+    private void placeBackButton(Stage stage, Pane root) {
+        Button backButton = new Button("_Back");
+        backButton.setOnAction(event -> {
+            start(stage);
+        });
+        backButton.setMinSize(100,100);
+        root.getChildren().add(backButton);
+    }
+
+    /**
+     * Sets the frontend using the values in the inventory.
+     * @param inventory the inventory to print out
+     * @param root the root Pane in which to append the items
+     */
+    private void setInventoryFrontend(Map<Item, Integer> inventory, Pane root) {
+        for (Item item : inventory.keySet()) {
+            VBox box = new VBox();
+            Text itemName = new Text("        " + item.getName() + "        ");
+            Text itemDescription = new Text("               ");
+            Text itemValue = new Text(item.getValue() + "G");
+            Text itemQuantity = new Text("Qty: " + inventory.get(item));
+
+            box.getChildren().addAll(itemName, itemDescription, itemValue, itemQuantity);
+            box.setScaleX(1.3);
+            box.setScaleY(1.3);
+            BackgroundFill background_fill = new BackgroundFill(Color.PINK,
+                    CornerRadii.EMPTY, Insets.EMPTY);
+            Background background = new Background(background_fill);
+            box.setBackground(background);
+            box.setPadding(new Insets(10));
+            root.getChildren().add(box);
+        }
+    }
+
+    /**
+     * Sets a title on a given Pane.
+     * @param root the root Pane object to which to place the title
+     * @param title a string representing the title to apply
+     */
+    private void setPanelTitle(Pane root, String title) {
+        Text panelTitle = new Text();
+        panelTitle.setText(title);
+        panelTitle.setScaleX(3);
+        panelTitle.setScaleY(3);
+        root.getChildren().addAll(panelTitle);
+        root.setPadding(new Insets(20));
+    }
+
+    /**
+     * Displays the map onto the main stage.
+     * @param stage the JavaFX stage onto which to display
+     * @param game the game instance containing all the model data
+     */
     private void showMap(Stage stage, GameController game) {
         List<GatheringPoint> gatheringPoints = game.loadGatheringPoints();
 
