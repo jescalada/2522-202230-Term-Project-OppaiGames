@@ -158,23 +158,38 @@ public class GameDriver extends Application {
      */
     private void showMap(Stage stage, GameController game) {
         List<GatheringPoint> gatheringPoints = game.loadGatheringPoints();
-
         BorderPane root = new BorderPane();
         TilePane center = new TilePane();
         StackPane top = new StackPane();
         StackPane bottom = new StackPane();
-        Scene scene = new Scene(root, 1920, 1040);
-        Text panelTitle = new Text();
-        panelTitle.setText("Map");
-        panelTitle.setScaleX(3);
-        panelTitle.setScaleY(3);
+        Scene scene = new Scene(root, 1200, 800);
+        setPanelTitle(top, "Gathering");
+        setMapFrontend(gatheringPoints, center);
+        placeBackButton(stage, bottom);
+        center.setPadding(new Insets(20));
+        center.setScaleX(1.5);
+        center.setScaleY(1.5);
+        center.setAlignment(Pos.CENTER);
+        root.setCenter(center);
+        root.setTop(top);
+        root.setBottom(bottom);
+        stage.setScene(scene);
+        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
+        stage.setMaximized(true);
+        stage.show();
+    }
 
+    /**
+     * Sets up the frontend for the map.
+     * @param gatheringPoints a list of the gathering points in this map
+     * @param root the root pane onto which to append the gathering points
+     */
+    private void setMapFrontend(List<GatheringPoint> gatheringPoints, Pane root) {
         for (GatheringPoint point : gatheringPoints) {
             VBox box = new VBox();
             Text pointName = new Text(point.getName());
             Text pointDescription = new Text("                     ");
             Button gatherButton = new Button("_Gather");
-
             gatherButton.setOnAction(event -> {
                 String gathered = game.processGather(point.getName());
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -182,9 +197,7 @@ public class GameDriver extends Application {
                 a.setContentText(gathered);
                 a.show();
             });
-
             gatherButton.setMinSize(100, 50);
-
             box.getChildren().addAll(pointName, pointDescription, gatherButton);
             box.setScaleX(1);
             box.setScaleY(1);
@@ -193,35 +206,15 @@ public class GameDriver extends Application {
             Background background = new Background(background_fill);
             box.setBackground(background);
             box.setPadding(new Insets(10));
-            center.getChildren().add(box);
+            root.getChildren().add(box);
         }
-
-        Button backButton = new Button("_Back");
-        backButton.setOnAction(event -> {
-            start(stage);
-        });
-        backButton.setMinSize(50,50);
-
-        center.setPadding(new Insets(20));
-        center.setScaleX(1.5);
-        center.setScaleY(1.5);
-        center.setAlignment(Pos.CENTER);
-
-        top.getChildren().addAll(panelTitle);
-        top.setPadding(new Insets(20));
-
-        bottom.getChildren().add(backButton);
-
-        root.setCenter(center);
-        root.setTop(top);
-        root.setBottom(bottom);
-
-        stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
-        stage.show();
     }
 
+    /**
+     * Displays the shop onto the main stage.
+     * @param stage the JavaFX stage onto which to display
+     * @param game the game instance containing all the model data
+     */
     private void showShop(Stage stage, GameController game) {
         Map<Item, Integer> itemsInStock = new HashMap<>();
         itemsInStock.put(new Item("Pepe Plushy", "A sad frog.", 10), 5);
