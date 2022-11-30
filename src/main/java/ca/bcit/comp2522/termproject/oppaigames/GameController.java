@@ -224,7 +224,6 @@ public class GameController {
         return "This is not supposed to happen. Please contact Chris Thompson to resolve this matter.";
     }
 
-
     /**
      * Handles player request to buy.
      */
@@ -238,8 +237,8 @@ public class GameController {
                 return result;
             }
 //            shop.deductItemToStock(item, 1);
-            player.deductMoney(item.getValue() * 2);
             player.addItem(item, 1);
+            player.deductMoney(item.getValue() * 2);
             result += "Successfully bought " + itemName + " for " + item.getValue() * 2 + "G.";
         } catch (Exception e) {
             e.printStackTrace();
@@ -254,12 +253,8 @@ public class GameController {
         String result = "";
         try {
             Item item = findItemByName(itemName);
-            if (!player.getInventory().containsKey(itemName)) {
-                result += "You do not have this item, cannot sell";
-                return result;
-            }
-            player.addMoney(item.getValue() * 0.5);
             player.deductItem(item, 1);
+            player.addMoney(item.getValue() * 0.5);
             int moneyObtained = (int)(item.getValue() * 0.5);
             result += "Successfully sold " + itemName + " for " + moneyObtained + "G.";
         } catch (Exception e) {

@@ -63,7 +63,11 @@ public class Player {
      */
     public void deductItem(Item item, int quantity) {
         if (item == null || !inventory.containsKey(item)) return;
-        inventory.put(item, inventory.get(item) - quantity);
+        if (inventory.get(item) - quantity == 0) {
+            inventory.remove(item);
+        } else {
+            inventory.put(item, inventory.get(item) - quantity);
+        }
     }
 
     /**
