@@ -93,8 +93,6 @@ public class GameDriver extends Application {
         root.setTop(top);
         root.setBottom(bottom);
         stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
         stage.show();
     }
 
@@ -174,8 +172,6 @@ public class GameDriver extends Application {
         root.setTop(top);
         root.setBottom(bottom);
         stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
         stage.show();
     }
 
@@ -306,8 +302,6 @@ public class GameDriver extends Application {
         root.setBottom(bottom);
 
         stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
         stage.show();
     }
 
@@ -340,8 +334,6 @@ public class GameDriver extends Application {
         root.setTop(top);
         root.setBottom(bottom);
         stage.setScene(scene);
-        stage.setTitle("OppaiGames: The Awesome JavaFX Clicker Game");
-        stage.setMaximized(true);
         stage.show();
     }
 
