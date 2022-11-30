@@ -6,11 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -19,6 +17,10 @@ import java.util.*;
 public class GameDriver extends Application {
     private static GameController game;
 
+    /**
+     * Starts the JavaFX application with the game.
+     * @param stage the JavaFX stage onto which to display
+     */
     @Override
     public void start(Stage stage) {
         HBox center = new HBox();
@@ -290,6 +292,12 @@ public class GameDriver extends Application {
         stage.setMaximized(true);
         stage.show();
     }
+
+    /**
+     * Displays the crafting page onto the main stage.
+     * @param stage the JavaFX stage onto which to display
+     * @param game the game instance containing all the model data
+     */
     private void showCraft(Stage stage, GameController game) {
         // Should load and display the inventory panel with corresponding info
         List<Recipe> recipes = game.loadRecipes();
